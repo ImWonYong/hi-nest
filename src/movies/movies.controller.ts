@@ -11,6 +11,8 @@ import {
 } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { Movie } from './entities/movie.entity';
+import { CreateMovieDTO } from './dto/create-movie.dto';
+import { UpdateMovieDTO } from './dto/update-movie.dto';
 
 @Controller('movies') // 기본 라우터
 export class MoviesController {
@@ -29,23 +31,23 @@ export class MoviesController {
   }
 
   @Get(':id')
-  getOne(@Param('id') movieId: string): Movie {
+  getOne(@Param('id') movieId: number): Movie {
     // @Param 데코레이터를 사용하면 NestJS는 url에 있는 id를 요청한 다는 것을 알게 됨
     return this.moviesService.getOne(movieId);
   }
 
   @Post()
-  create(@Body() movieData) {
+  create(@Body() movieData: CreateMovieDTO) {
     return this.moviesService.create(movieData);
   }
 
   @Delete(':id')
-  remove(@Param('id') movieId: string) {
+  remove(@Param('id') movieId: number) {
     return this.moviesService.deleteOne(movieId);
   }
 
   @Patch(':id')
-  path(@Param('id') movieId: string, @Body() updateData) {
+  path(@Param('id') movieId: number, @Body() updateData: UpdateMovieDTO) {
     return this.moviesService.update(movieId, updateData);
   }
 }
